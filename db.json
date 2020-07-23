@@ -1,0 +1,38 @@
+{
+  "students": [
+    {
+      "id": "1",
+      "data": {
+        "firstName": "Charan",
+        "lastName": "Sai",
+        "address": "malakapet",
+        "cga": "7",
+        "cityName": "vskp",
+        "stateName": "AP"
+      }
+    },
+    {
+      "id": "2",
+      "data": {
+        "firstName": "Ram",
+        "lastName": "Sai",
+        "address": "salakapet",
+        "cga": "7",
+        "cityName": "vzm",
+        "stateName": "MP"
+      }
+    },
+      {
+          "id": "3",
+          "data": {
+            "firstName": "Shyam",
+            "lastName": "Kelik",
+            "address": "lakapet",
+            "cga": "7",
+            "cityName": "Bzs",
+            "stateName": "Up"
+          }
+      }
+    
+  ]
+}
