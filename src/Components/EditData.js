@@ -1,77 +1,79 @@
-import React from "react";
-import { Form, Button, Row } from "react-bootstrap";
-import "./AddStudent.css";
-import history from "../services/history";
-import axios from "axios";
-class AddStudent extends React.Component {
-  state = {
-    firstName: "",
-    lastName: "",
-    address: "",
-    mobileNumber: "",
-    cityName: "",
-    stateName: "",
-    gpa: "",
-    validated: false,
-    loading: true,
-  };
-
-  handleChangeFirstName = (event) => {
-    this.setState({ firstName: event.target.value });
-  };
-  handleChangeLastName = (event) => {
-    this.setState({ lastName: event.target.value });
-  };
-  handleChangeAddress = (event) => {
-    this.setState({ address: event.target.value });
-  };
-
-  handleChangeMobileNumber = (event) => {
-    this.setState({ mobileNumber: event.target.value });
-  };
-
-  handleChangeGpa = (event) => {
-    this.setState({ gpa: event.target.value });
-  };
-
-  handleChangeCityName = (event) => {
-    this.setState({ cityName: event.target.value });
-  };
-
-  handleChangeStateName = (event) => {
-    this.setState({ stateName: event.target.value });
-  };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
+import React from 'react';
+import {Form, Button ,Row} from 'react-bootstrap';
+import axios from 'axios';
+import history from '../services/history';
+import './AddStudent.css';
+class EditData extends React.Component {
+    state ={
+        firstName: '',
+        lastName: '',
+        address: '',
+        mobileNumber: '',
+        cityName: '',
+        stateName: '',
+        gpa: '',
+        validated: false,
+        loading: true
+       
+      }
+     
+      
+      handleChangeFirstName = (event) => {
+        this.setState({firstName: event.target.value });
+      };
+      handleChangeLastName = (event) => {
+        this.setState({ lastName: event.target.value });
+      };
+      handleChangeAddress = (event) => {
+        this.setState({ address: event.target.value });
+      };
     
-      axios
-        .post("http://localhost:3001/students", {
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          address: this.state.address,
-          mobileNumber: this.state.mobileNumber,
-          cityName: this.state.cityName,
-          stateName: this.state.stateName,
-          gpa: this.state.gpa,
-        })
-        .then((res) => console.log(res));
+      handleChangeMobileNumber = (event) => {
+        this.setState({ mobileNumber: event.target.value });
+      };
+    
+      handleChangeGpa = (event) => {
+        this.setState({ gpa: event.target.value });
+      };
+    
+      handleChangeCityName = (event) => {
+        this.setState({ cityName: event.target.value });
+      };
+    
+      handleChangeStateName = (event) => {
+        this.setState({ stateName: event.target.value });
+      };
+    
+    
+    handleSubmit = (e) => {
+    e.preventDefault();
+   
+    const id = this.props.match.params.id;
+    console.log("yeah mate")
+      axios.put(`http://localhost:3001/students/${id}`,
+      {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      address: this.state.address,
+      mobileNumber: this.state.mobileNumber,
+      cityName: this.state.cityName,
+      stateName: this.state.stateName,
+      gpa: this.state.gpa
+      }).then(res => console.log(res.data))
       history.push("/show-data");
     
-  };
-
-  render() {
-    return (
-      <>
-        <p>Hello there!</p>
-        <h2>Go ahead and enter your details</h2>
-        <div className="wrapper">
-          <Form
-            noValidate
-            validated={this.state.validated}
-            onSubmit={this.handleSubmit}
-          >
+}
+      
+  
+    
+  
+    render(){
+       
+        return(
+            <>
+            <h1>Hello mate, Go head and change your data </h1>
+           <div className="wrapper-edit">
+            <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
             <Form.Group controlId="firstName">
               <Form.Label> First Name </Form.Label>{" "}
               <Form.Control
@@ -80,10 +82,9 @@ class AddStudent extends React.Component {
                 placeholder="Enter First Name"
                 value={this.state.firstName}
                 onChange={this.handleChangeFirstName}
-                style={{ borderRadius: "5px", margin: "5px" }}
               />
               <Form.Control.Feedback type="invalid">
-                {/* Please enter First Name  */}
+                 {/* Please enter First Name  */}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="LastName">
@@ -94,7 +95,6 @@ class AddStudent extends React.Component {
                 placeholder="Enter Last Name"
                 value={this.state.lastName}
                 onChange={this.handleChangeLastName}
-                style={{ borderRadius: "5px", margin: "5px" }}
               />
               <Form.Control.Feedback type="invalid">
                 {/* Please enter Last Name */}
@@ -108,10 +108,9 @@ class AddStudent extends React.Component {
                 placeholder="Enter Your Address here"
                 value={this.state.address}
                 onChange={this.handleChangeAddress}
-                style={{ borderRadius: "5px", margin: "5px" }}
               />
               <Form.Control.Feedback type="invalid">
-                {/* Please enter your address  */}
+                 {/* Please enter your address  */}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="formMobileNumber">
@@ -122,10 +121,9 @@ class AddStudent extends React.Component {
                 placeholder="Mobile Number here"
                 value={this.state.mobileNumber}
                 onChange={this.handleChangeMobileNumber}
-                style={{ borderRadius: "5px", margin: "5px" }}
               />
               <Form.Control.Feedback type="invalid">
-                {/* Please enter Mobile Number  */}
+                 {/* Please enter Mobile Number  */}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="formGpa">
@@ -136,10 +134,9 @@ class AddStudent extends React.Component {
                 placeholder="Enter your Gpa "
                 value={this.state.Gpa}
                 onChange={this.handleChangeGpa}
-                style={{ borderRadius: "5px", margin: "5px" }}
               />
               <Form.Control.Feedback type="invalid">
-                {/* Please enter Gpa  */}
+                 {/* Please enter Gpa  */}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="formCity">
@@ -150,10 +147,9 @@ class AddStudent extends React.Component {
                 placeholder="City Name"
                 value={this.state.cityName}
                 onChange={this.handleChangeCityName}
-                style={{ borderRadius: "5px", margin: "5px" }}
               />
               <Form.Control.Feedback type="invalid">
-                {/* Please enter City Name  */}
+                 {/* Please enter City Name  */}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="formStateName">
@@ -164,7 +160,6 @@ class AddStudent extends React.Component {
                 placeholder="State Name here"
                 value={this.state.stateName}
                 onChange={this.handleChangeStateName}
-                style={{ borderRadius: "5px", margin: "5px" }}
               />
               <Form.Control.Feedback type="invalid">
                 {/* Please enter you State Name  */}
@@ -172,27 +167,12 @@ class AddStudent extends React.Component {
             </Form.Group>{" "}
             <Row>
               {" "}
-              <Row>
-                {" "}
-                <Button
-                  type="submit"
-                  style={{
-                    cursor: "pointer",
-                    width: "40%",
-                    height: "1.8em",
-                    borderRadius: "5px",
-                    margin: "5px",
-                  }}
-                >
-                  Submit{" "}
-                </Button>{" "}
-              </Row>{" "}
+              <Button onClick={this.handleSubmit} style={{cursor: 'pointer',borderRadius: '5px',marginTop: '10px'}} >Confirm Edit</Button>
             </Row>{" "}
           </Form>{" "}
-        </div>
-      </>
-    );
-  }
+          </div>
+             </>
+        );
+    }
 }
-
-export default AddStudent;
+export default EditData;

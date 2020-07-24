@@ -1,13 +1,13 @@
 {
   "students": [
     {
-      "firstName": "Karan",
-      "lastName": "Sai",
-      "address": "1-5-112",
-      "mobileNumber": "08179964228",
-      "cityName": "VISAKHAPATNAM",
-      "stateName": "Old municipality office backside",
-      "gpa": "",
+      "firstName": "Manakatha",
+      "lastName": "Ajat",
+      "address": "Rayudu",
+      "mobileNumber": "78989798",
+      "cityName": "poalo",
+      "stateName": "Pasur",
+      "gpa": "9",
       "id": 2
     },
     {
@@ -21,34 +21,24 @@
       "id": 3
     },
     {
-      "firstName": "Charan",
-      "lastName": "Sai",
-      "address": "1-5-112",
-      "mobileNumber": "08179964228",
-      "cityName": "VISAKHAPATNAM",
-      "stateName": "Old municipality office backside",
-      "gpa": "10",
+      "firstName": "Scout",
+      "lastName": "Ninja",
+      "address": "Rage",
+      "mobileNumber": "45678998",
+      "cityName": "Nizamabas",
+      "stateName": "Delhi",
+      "gpa": "8.9",
       "id": 6
     },
     {
-      "firstName": "Dani",
-      "lastName": "Okal",
-      "address": "@gamil",
-      "mobileNumber": "78979898",
-      "cityName": "BXA",
-      "stateName": "UP",
-      "gpa": "9.8",
+      "firstName": "Prassad",
+      "lastName": "Nam",
+      "address": "5679",
+      "mobileNumber": "789799",
+      "cityName": "maridpalli",
+      "stateName": "uppalpalli",
+      "gpa": "7.8",
       "id": 7
-    },
-    {
-      "firstName": "Raju",
-      "lastName": "Hoshi",
-      "address": "@hotmail",
-      "mobileNumber": "9785487898",
-      "cityName": "Vizag",
-      "stateName": "Okla",
-      "gpa": "8.5",
-      "id": 8
     },
     {
       "firstName": "Charan",
@@ -61,14 +51,14 @@
       "id": 9
     },
     {
-      "firstName": "Santhosh",
-      "lastName": "Narayan",
-      "address": "789 kuaktpalli",
-      "mobileNumber": "87567899",
-      "cityName": "Vada Chennai",
-      "stateName": "Tamil Nadu",
-      "gpa": "5.3",
-      "id": 10
+      "firstName": "Bill",
+      "lastName": "Gates",
+      "address": "45789789",
+      "mobileNumber": "565897979",
+      "cityName": "chicago",
+      "stateName": "America",
+      "gpa": "9.3",
+      "id": 11
     }
   ]
 }

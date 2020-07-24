@@ -28,6 +28,10 @@ class ShowData extends React.Component {
       .get(`http://localhost:3001/students/${id}`)
       .then(history.push(`/full_details/${id}`));
   };
+  editThisData = (index) => {
+    const id = this.state.students[index].id;
+    history.push(`/edit_data/${id}`);
+  };
   render() {
     return (
       <div className="container" style={{ backgroundColor: "lightgray" }}>
@@ -56,6 +60,7 @@ class ShowData extends React.Component {
                 <th>First Name</th>
                 <th>Full Details</th>
                 <th>Delete data</th>
+                <th>Edit data</th>
               </tr>
             </thead>
             <tbody>
@@ -71,7 +76,7 @@ class ShowData extends React.Component {
                     <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
                       {" "}
                       <Button
-                        style={{ borderRadius: "5px",cursor: 'pointer' }}
+                        style={{ borderRadius: "5px", cursor: "pointer" }}
                         onClick={() => this.showEntireDetails(index)}
                       >
                         Full Details
@@ -80,10 +85,19 @@ class ShowData extends React.Component {
                     <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
                       {" "}
                       <Button
-                        style={{ borderRadius: "5px",cursor: 'pointer' }}
+                        style={{ borderRadius: "5px", cursor: "pointer" }}
                         onClick={() => this.deleteData(index)}
                       >
                         Delete this Data
+                      </Button>{" "}
+                    </td>
+                    <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+                      {" "}
+                      <Button
+                        style={{ borderRadius: "5px", cursor: "pointer" }}
+                        onClick={() => this.editThisData(index)}
+                      >
+                        Edit this Data
                       </Button>{" "}
                     </td>
                   </tr>
