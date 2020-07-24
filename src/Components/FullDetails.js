@@ -1,6 +1,7 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Table, Button } from "react-bootstrap";
+import history from "../../src/services/history";
 class FullDetails extends React.Component {
   state = {
     student: [],
@@ -15,14 +16,73 @@ class FullDetails extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2> Here are the details of the student you asked for </h2>
-        <p> firstName : {this.state.student.firstName} </p>
-        <p> lastName : {this.state.student.lastName} </p>
-        <p> address : {this.state.student.address} </p>
-        <p> cityName : {this.state.student.cityName} </p>
-        <p> stateName : {this.state.student.stateName} </p>
-        <p> gpa : {this.state.student.gpa} </p>
+      <div className="container" style={{ backgroundColor: "gray" }}>
+        <div
+          style={{
+            height: "70vh",
+            marginTop: "14px",
+            textAlign: "center",
+          }}
+        >
+          <Table style={{ marginLeft: "auto", marginRight: "auto" }}>
+            <thead
+              style={{
+                position: "sticky",
+                top: "0px",
+                zIndex: "10",
+              }}
+            >
+              <tr>
+                <th>#</th>
+                <th>Variable</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>1</td>
+                <td>firstName </td>
+                <td> {this.state.student.firstName}</td>
+              </tr>
+              <tr>
+                <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>2</td>
+                <td>lastName </td>
+                <td>{this.state.student.lastName}</td>
+              </tr>
+              <tr>
+                <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>3</td>
+                <td>address </td>
+                <td>{this.state.student.address}</td>
+              </tr>
+              <tr>
+                <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>4</td>
+                <td>cityName </td>
+                <td> {this.state.student.cityName}</td>
+              </tr>
+              <tr>
+                <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>5</td>
+                <td>stateName</td>
+                <td>{this.state.student.stateName}</td>
+              </tr>
+              <tr>
+                <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>6</td>
+                <td>gpa</td>
+                <td>{this.state.student.gpa}</td>
+              </tr>
+            </tbody>
+          </Table>
+          <Button
+            style={{
+              margin: "25px",
+              borderRadius: "5px",
+              height: "2.5em",
+              cursor: "pointer",
+            }}
+            onClick={() => history.push("/show-data")}
+          >
+            Go back
+          </Button>
+        </div>
       </div>
     );
   }
