@@ -1,38 +1,44 @@
 {
   "students": [
     {
-      "id": "1",
-      "data": {
-        "firstName": "Charan",
-        "lastName": "Sai",
-        "address": "malakapet",
-        "cga": "7",
-        "cityName": "vskp",
-        "stateName": "AP"
-      }
+      "firstName": "Karan",
+      "lastName": "Sai",
+      "address": "1-5-112",
+      "mobileNumber": "08179964228",
+      "cityName": "VISAKHAPATNAM",
+      "stateName": "Old municipality office backside",
+      "gpa": "",
+      "id": 2
     },
     {
-      "id": "2",
-      "data": {
-        "firstName": "Ram",
-        "lastName": "Sai",
-        "address": "salakapet",
-        "cga": "7",
-        "cityName": "vzm",
-        "stateName": "MP"
-      }
+      "firstName": "Ramana",
+      "lastName": "Sai",
+      "address": "1-5-112",
+      "mobileNumber": "08179964228",
+      "cityName": "VISAKHAPATNAM",
+      "stateName": "Old municipality office backside",
+      "gpa": "",
+      "id": 3
     },
-      {
-          "id": "3",
-          "data": {
-            "firstName": "Shyam",
-            "lastName": "Kelik",
-            "address": "lakapet",
-            "cga": "7",
-            "cityName": "Bzs",
-            "stateName": "Up"
-          }
-      }
-    
+    {
+      "firstName": "Charan",
+      "lastName": "Sai",
+      "address": "1-5-112",
+      "mobileNumber": "08179964228",
+      "cityName": "VISAKHAPATNAM",
+      "stateName": "Old municipality office backside",
+      "gpa": "10",
+      "id": 6
+    },
+    {
+      "firstName": "Rakesh",
+      "lastName": "Kumar",
+      "address": "456",
+      "mobileNumber": "9789878979",
+      "cityName": "Bza",
+      "stateName": "AP",
+      "gpa": "9",
+      "id": 7
+    }
   ]
 }

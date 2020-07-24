@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Row } from "react-bootstrap";
 import "./AddStudent.css";
 import history from "../services/history";
-import DataEntryMain from '../DataEntryMain';
+import axios from 'axios';
 class AddStudent extends React.Component {
  state ={
    firstName: '',
@@ -43,7 +43,17 @@ class AddStudent extends React.Component {
 
   handleSubmit = (e) => {
 e.preventDefault();
-  history.push("./show-data");
+  axios.post('http://localhost:3001/students',
+  {
+  firstName: this.state.firstName,
+  lastName: this.state.lastName,
+  address: this.state.address,
+  mobileNumber: this.state.mobileNumber,
+  cityName: this.state.cityName,
+  stateName: this.state.stateName,
+  gpa: this.state.gpa
+  }).then(res => console.log(res))
+  history.push("/show-data");
   
   
       
