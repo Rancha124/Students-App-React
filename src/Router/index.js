@@ -8,10 +8,10 @@ class Routes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route path="/show-data" isPrivate component={ShowData} />
-        <Route path="/" exact isPrivate component={AddStudent} />
-        <Route path="/full_details/:id" component={FullDetails} />
-        <Route path="/edit_data/:id" component={EditData} />
+        <Route path="/show-data" isPrivate component={(props) => <ShowData {...props} /> } />
+        <Route path="/" exact isPrivate component={(props) => <AddStudent {...props} /> } />
+        <Route path="/full_details/:id" component={(props) => <FullDetails {...props} />} />
+        <Route path="/edit_data/:id" component={(props) => <EditData {...props} /> } />
       </Switch>
     );
   }

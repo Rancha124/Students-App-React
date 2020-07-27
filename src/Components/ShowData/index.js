@@ -10,6 +10,7 @@ class ShowData extends React.Component {
   componentDidMount() {
     axios.get("http://localhost:3001/students").then((result) => {
       this.setState({ students: result.data });
+  
     });
   }
 
@@ -66,7 +67,7 @@ class ShowData extends React.Component {
             <tbody>
               {this.state.students.map((obj, index) => {
                 return (
-                  <tr>
+                  <tr key={index}>
                     <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
                       {index + 1}
                     </td>

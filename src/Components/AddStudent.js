@@ -1,8 +1,9 @@
 import React from "react";
-import { Form, Button, Row } from "react-bootstrap";
+import { Form, Row} from "react-bootstrap";
 import "./AddStudent.css";
 import history from "../services/history";
 import axios from "axios";
+import PropTypes from 'prop-types';
 class AddStudent extends React.Component {
   state = {
     firstName: "",
@@ -15,6 +16,7 @@ class AddStudent extends React.Component {
     validated: false,
     loading: true,
   };
+ 
 
   handleChangeFirstName = (event) => {
     this.setState({ firstName: event.target.value });
@@ -43,25 +45,38 @@ class AddStudent extends React.Component {
   };
 
   handleSubmit = (e) => {
-    e.preventDefault();
+    console.log('at start');
     const form = e.currentTarget;
-    
+    console.log(form.checkValidity());
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.setState({validated: true});
+      alert('Submit all details');
+      console.log('form not filled completely');
+     
+    } else {
+      console.log("filled Success")
       axios
-        .post("http://localhost:3001/students", {
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          address: this.state.address,
-          mobileNumber: this.state.mobileNumber,
-          cityName: this.state.cityName,
-          stateName: this.state.stateName,
-          gpa: this.state.gpa,
-        })
-        .then((res) => console.log(res));
+      .post("http://localhost:3001/students", {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        address: this.state.address,
+        mobileNumber: this.state.mobileNumber,
+        cityName: this.state.cityName,
+        stateName: this.state.stateName,
+        gpa: this.state.gpa,
+      })
+      .then((res) => 
+      {console.log('posted Succesfully');
+      })
       history.push("/show-data");
-    
+  
+    }
+   
   };
-
   render() {
+   
     return (
       <>
         <p>Hello there!</p>
@@ -83,7 +98,7 @@ class AddStudent extends React.Component {
                 style={{ borderRadius: "5px", margin: "5px" }}
               />
               <Form.Control.Feedback type="invalid">
-                {/* Please enter First Name  */}
+                Please enter First Name  
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="LastName">
@@ -170,24 +185,7 @@ class AddStudent extends React.Component {
                 {/* Please enter you State Name  */}
               </Form.Control.Feedback>
             </Form.Group>{" "}
-            <Row>
-              {" "}
-              <Row>
-                {" "}
-                <Button
-                  type="submit"
-                  style={{
-                    cursor: "pointer",
-                    width: "40%",
-                    height: "1.8em",
-                    borderRadius: "5px",
-                    margin: "5px",
-                  }}
-                >
-                  Submit{" "}
-                </Button>{" "}
-              </Row>{" "}
-            </Row>{" "}
+            <Row> <button style={{cursor: 'pointer'}}>Submit</button> </Row>{' '}
           </Form>{" "}
         </div>
       </>
@@ -195,4 +193,8 @@ class AddStudent extends React.Component {
   }
 }
 
+AddStudent.propTypes = {
+  changePin: PropTypes.func,
+  showSpinner: PropTypes.bool,
+};
 export default AddStudent;
