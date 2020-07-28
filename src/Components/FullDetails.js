@@ -16,10 +16,10 @@ class FullDetails extends React.Component {
 
   render() {
     return (
-      <div className="container" style={{ backgroundColor: "gray" }}>
+      <div className="container" style={{ backgroundColor: "powderblue" }}>
         <div
           style={{
-            height: "70vh",
+            height: "auto",
             marginTop: "14px",
             textAlign: "center",
           }}

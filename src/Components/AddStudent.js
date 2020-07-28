@@ -1,200 +1,249 @@
-import React from "react";
-import { Form, Row} from "react-bootstrap";
-import "./AddStudent.css";
-import history from "../services/history";
-import axios from "axios";
-import PropTypes from 'prop-types';
-class AddStudent extends React.Component {
-  state = {
-    firstName: "",
-    lastName: "",
-    address: "",
-    mobileNumber: "",
-    cityName: "",
-    stateName: "",
-    gpa: "",
-    validated: false,
-    loading: true,
-  };
- 
+import React from 'react';
+import styled from 'styled-components';
+import { Form, Button } from 'react-bootstrap';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
+import history from '../services/history'; 
 
-  handleChangeFirstName = (event) => {
-    this.setState({ firstName: event.target.value });
-  };
-  handleChangeLastName = (event) => {
-    this.setState({ lastName: event.target.value });
-  };
-  handleChangeAddress = (event) => {
-    this.setState({ address: event.target.value });
-  };
+// Styled-components styles
+const CONTAINER = styled.div`
+  background: #F7F9FA;
+  height: auto;
+  width: 90%;
+  margin: 5em auto;
+  color: snow;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
 
-  handleChangeMobileNumber = (event) => {
-    this.setState({ mobileNumber: event.target.value });
-  };
+  @media(min-width: 786px) {
+    width: 60%;
+  }
 
-  handleChangeGpa = (event) => {
-    this.setState({ gpa: event.target.value });
-  };
+  label {
+    color: #24B9B6;
+    font-size: 1.2em;
+    font-weight: 400;
+  }
 
-  handleChangeCityName = (event) => {
-    this.setState({ cityName: event.target.value });
-  };
+  h1 {
+    color: #24B9B6;
+    padding-top: .5em;
+  }
 
-  handleChangeStateName = (event) => {
-    this.setState({ stateName: event.target.value });
-  };
+  .form-group {
+    margin-bottom: 2.5em;
+  }
+  .error {
+    border: 2px solid #FF6565;
+  }
+  .error-message {
+    color: #FF6565;
+    padding: .5em .2em;
+    height: 1em;
+    position: absolute;
+    font-size: .8em;
+  }
+`;
 
-  handleSubmit = (e) => {
-    console.log('at start');
-    const form = e.currentTarget;
-    console.log(form.checkValidity());
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.setState({validated: true});
-      alert('Submit all details');
-      console.log('form not filled completely');
-     
-    } else {
-      console.log("filled Success")
+const MYFORM = styled(Form)`
+  width: 90%;
+  text-align: left;
+  padding-top: 2em;
+  padding-bottom: 2em;
+
+  @media(min-width: 786px) {
+    width: 50%;
+  }
+`;
+
+const BUTTON = styled(Button)`
+  background: #1863AB;
+  border: none;
+  font-size: 1.2em;
+  font-weight: 400;
+
+  &:hover {
+    background: #1D3461;
+  }
+`;
+const mobileNumberRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string()
+  .min(2, "*Names must have at least 2 characters")
+  .max(100, "*Names can't be longer than 100 characters")
+  .required("*Name is required"),
+  lastName: Yup.string()
+  .min(2, "*Names must have at least 2 characters")
+  .max(100, "*Names can't be longer than 100 characters")
+  .required("*Name is required"),
+  mobileNumber: Yup.string()
+  .matches(mobileNumberRegExp, "*Phone number is not valid")
+  .required("*Phone number required"),
+  address: Yup.string()
+  .min(2, "*Names must have at least 2 characters")
+  .max(100, "*Names can't be longer than 100 characters")
+  .required("*Name is required"),
+  cityName: Yup.string()
+  .min(2, "*Names must have at least 2 characters")
+  .max(100, "*Names can't be longer than 100 characters")
+  .required("*Name is required"),
+  stateName: Yup.string()
+  .min(2, "*Names must have at least 2 characters")
+  .max(100, "*Names can't be longer than 100 characters")
+  .required("*Name is required"),
+  gpa: Yup.string()
+  .min(2, "*Names must have at least 2 characters")
+  .max(100, "*Names can't be longer than 100 characters")
+  .required("*Name is required"),
+});
+
+const AddStudent = () => {
+  return (
+    <CONTAINER>
+      <Formik initialValues={{ firstName:"", lastName:"",
+       address:"", mobileNumber:"",cityName: "",stateName: "",gpa: ""}}
+       validationSchema={validationSchema} 
+       onSubmit={(values, {setSubmitting, resetForm}) => {
+            setSubmitting(true);
+            console.log('just before post');
       axios
-      .post("http://localhost:3001/students", {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        address: this.state.address,
-        mobileNumber: this.state.mobileNumber,
-        cityName: this.state.cityName,
-        stateName: this.state.stateName,
-        gpa: this.state.gpa,
-      })
+      .post("http://localhost:3001/students", {...values})
       .then((res) => 
       {console.log('posted Succesfully');
       })
-      history.push("/show-data");
+      resetForm();
+      setSubmitting(false);
+      history.push('/show-data');
+      
   
-    }
-   
-  };
-  render() {
-   
-    return (
-      <>
-        <p>Hello there!</p>
-        <h2>Go ahead and enter your details</h2>
-        <div className="wrapper">
-          <Form
-            noValidate
-            validated={this.state.validated}
-            onSubmit={this.handleSubmit}
-          >
-            <Form.Group controlId="firstName">
-              <Form.Label> First Name </Form.Label>{" "}
-              <Form.Control
-                required
-                type="text"
-                placeholder="Enter First Name"
-                value={this.state.firstName}
-                onChange={this.handleChangeFirstName}
-                style={{ borderRadius: "5px", margin: "5px" }}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please enter First Name  
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="LastName">
-              <Form.Label> Last Name </Form.Label>{" "}
-              <Form.Control
-                required
-                type="text"
-                placeholder="Enter Last Name"
-                value={this.state.lastName}
-                onChange={this.handleChangeLastName}
-                style={{ borderRadius: "5px", margin: "5px" }}
-              />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter Last Name */}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formAddress">
-              <Form.Label> Enter Your Address </Form.Label>{" "}
-              <Form.Control
-                required
-                type="text"
-                placeholder="Enter Your Address here"
-                value={this.state.address}
-                onChange={this.handleChangeAddress}
-                style={{ borderRadius: "5px", margin: "5px" }}
-              />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter your address  */}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formMobileNumber">
-              <Form.Label> Enter Mobile Number </Form.Label>{" "}
-              <Form.Control
-                required
-                type="number"
-                placeholder="Mobile Number here"
-                value={this.state.mobileNumber}
-                onChange={this.handleChangeMobileNumber}
-                style={{ borderRadius: "5px", margin: "5px" }}
-              />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter Mobile Number  */}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formGpa">
-              <Form.Label> Your Gpa </Form.Label>{" "}
-              <Form.Control
-                required
-                type="number"
-                placeholder="Enter your Gpa "
-                value={this.state.Gpa}
-                onChange={this.handleChangeGpa}
-                style={{ borderRadius: "5px", margin: "5px" }}
-              />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter Gpa  */}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formCity">
-              <Form.Label> Enter CityName </Form.Label>{" "}
-              <Form.Control
-                required
-                type="text"
-                placeholder="City Name"
-                value={this.state.cityName}
-                onChange={this.handleChangeCityName}
-                style={{ borderRadius: "5px", margin: "5px" }}
-              />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter City Name  */}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formStateName">
-              <Form.Label> Enter State </Form.Label>{" "}
-              <Form.Control
-                required
-                type="text"
-                placeholder="State Name here"
-                value={this.state.stateName}
-                onChange={this.handleChangeStateName}
-                style={{ borderRadius: "5px", margin: "5px" }}
-              />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter you State Name  */}
-              </Form.Control.Feedback>
-            </Form.Group>{" "}
-            <Row> <button style={{cursor: 'pointer'}}>Submit</button> </Row>{' '}
-          </Form>{" "}
-        </div>
-      </>
-    );
-  }
+             
+
+    }}
+      >
+           {( {values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting }) => (
+      <MYFORM onSubmit={handleSubmit}  className="mx-auto">
+        <Form.Group controlId="formFName">
+          <Form.Label>First Name :</Form.Label>
+          <Form.Control
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.firstName}
+            className={touched.firstName && errors.firstName ? "error" : null}
+            />
+             {touched.firstName && errors.firstName ? (
+                <div className="error-message">{errors.firstName}</div>
+              ): null}
+        </Form.Group>
+        <Form.Group controlId="formLName">
+          <Form.Label>Last Name :</Form.Label>
+          <Form.Control
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.lastName}
+              className={touched.lastName && errors.lastName ? "error" : null}
+            />
+             {touched.lastName && errors.lastName ? (
+                <div className="error-message">{errors.lastName}</div>
+              ): null}
+        </Form.Group>
+        <Form.Group controlId="formMNumber">
+          <Form.Label>Mobile Number :</Form.Label>
+          <Form.Control
+            type="text"
+            name="mobileNumber"
+            placeholder="Mobile Number"
+            onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.mobileNumber}
+              className={touched.mobileNumber && errors.mobileNumber ? "error" : null}
+          />
+           {touched.mobileNumber && errors.mobileNumber ? (
+                <div className="error-message">{errors.mobileNumber}</div>
+              ): null}
+        </Form.Group>
+        <Form.Group controlId="formAddress">
+          <Form.Label>Address :</Form.Label>
+          <Form.Control
+            type="text"
+            name="address"
+            placeholder="Address"
+            onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.address}
+              className={touched.address && errors.address ? "error" : null}
+            />
+             {touched.address && errors.address ? (
+                <div className="error-message">{errors.address}</div>
+              ): null}
+        </Form.Group>
+        <Form.Group controlId="formCity">
+          <Form.Label>City Name:</Form.Label>
+          <Form.Control
+            type="text"
+            name="cityName"
+            placeholder="City Name"
+            onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.cityName}
+              className={touched.cityName && errors.cityName ? "error" : null}
+            />
+             {touched.cityName && errors.cityName ? (
+                <div className="error-message">{errors.cityName}</div>
+              ): null}
+        </Form.Group>
+        <Form.Group controlId="formState">
+          <Form.Label>State Name :</Form.Label>
+          <Form.Control
+            type="text"
+            name="stateName"
+            placeholder="State Name"
+            onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.stateName}
+              className={touched.stateName && errors.stateName ? "error" : null}
+            />
+             {touched.stateName && errors.stateName ? (
+                <div className="error-message">{errors.stateName}</div>
+              ): null}
+        </Form.Group>
+        <Form.Group controlId="formGpa">
+          <Form.Label>Gpa :</Form.Label>
+          <Form.Control
+            type="text"
+            name="gpa"
+            placeholder="Gpa"
+            onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.gpa}
+              className={touched.gpa && errors.gpa ? "error" : null}
+            />
+             {touched.gpa && errors.gpa ? (
+                <div className="error-message">{errors.gpa}</div>
+              ): null}
+        </Form.Group>
+        <BUTTON variant="primary" type="submit" disabled={isSubmitting}>
+          Submit
+        </BUTTON>
+      </MYFORM>
+          )}
+      </Formik>
+    </CONTAINER>
+  );
 }
 
-AddStudent.propTypes = {
-  changePin: PropTypes.func,
-  showSpinner: PropTypes.bool,
-};
+
 export default AddStudent;

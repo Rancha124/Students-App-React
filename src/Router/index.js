@@ -4,6 +4,7 @@ import ShowData from "../Components/ShowData/index";
 import AddStudent from "../Components/AddStudent";
 import FullDetails from "../Components/FullDetails";
 import EditData from "../Components/EditData";
+import FormsPage from '../Components/AddStudent';
 class Routes extends React.Component {
   render() {
     return (

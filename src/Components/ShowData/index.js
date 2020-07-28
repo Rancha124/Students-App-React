@@ -38,7 +38,7 @@ class ShowData extends React.Component {
       <div className="container" style={{ backgroundColor: "lightgray" }}>
         <div
           style={{
-            height: "70vh",
+            height: "auto",
             marginTop: "14px",
             textAlign: "center",
           }}

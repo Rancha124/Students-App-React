@@ -1,13 +1,13 @@
 {
   "students": [
     {
-      "firstName": "Ajith",
-      "lastName": "Thala",
-      "address": "789789",
-      "mobileNumber": "7897987897",
-      "cityName": "Chennai",
-      "stateName": "Tamil Nadu",
-      "gpa": "97",
+      "firstName": "Zebra",
+      "lastName": "Sai",
+      "address": "1-5-112",
+      "mobileNumber": "08179964228",
+      "cityName": "VISAKHAPATNAM",
+      "stateName": "UP",
+      "gpa": "65",
       "id": 2
     },
     {
@@ -101,14 +101,34 @@
       "id": 19
     },
     {
-      "firstName": "Doctor",
-      "lastName": "Murphy",
-      "address": "6879",
-      "mobileNumber": "315789",
-      "cityName": "Los Angeles",
-      "stateName": "America",
-      "gpa": "98",
-      "id": 21
+      "firstName": "ChanChad ",
+      "lastName": "the Second",
+      "address": "1-5-112",
+      "mobileNumber": "08179964228",
+      "cityName": "VISAKHAPATNAM",
+      "stateName": "AP",
+      "gpa": "9.6",
+      "id": 23
+    },
+    {
+      "firstName": "Rav Gopal",
+      "lastName": "Varma",
+      "address": "Panjagutta",
+      "mobileNumber": "657894567",
+      "cityName": "Jublie Hills",
+      "stateName": "Hyderabad",
+      "gpa": "9.3",
+      "id": 24
+    },
+    {
+      "firstName": "Lion",
+      "lastName": "Animal",
+      "address": "Zoo",
+      "mobileNumber": "7895678989",
+      "cityName": "Forest",
+      "stateName": "Jungle",
+      "gpa": "95",
+      "id": 25
     }
   ]
 }
