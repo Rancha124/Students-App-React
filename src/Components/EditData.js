@@ -1,189 +1,367 @@
 import React from "react";
-import { Form, Row } from "react-bootstrap";
+import styled from "styled-components";
+import { Form, Button } from "react-bootstrap";
+import { Formik } from "formik";
+import * as Yup from "yup";
 import axios from "axios";
 import history from "../services/history";
-import "./AddStudent.css";
-class EditData extends React.Component {
-  state = {
-    firstName: "",
-    lastName: "",
-    address: "",
-    mobileNumber: "",
-    cityName: "",
-    stateName: "",
-    gpa: "",
-    validated: false,
-    loading: true,
-  };
 
-  handleChangeFirstName = (event) => {
-    this.setState({ firstName: event.target.value });
-  };
-  handleChangeLastName = (event) => {
-    this.setState({ lastName: event.target.value });
-  };
-  handleChangeAddress = (event) => {
-    this.setState({ address: event.target.value });
-  };
+// Styled-components styles
+const CONTAINER = styled.div`
+  background: #f7f9fa;
+  height: auto;
+  width: 90%;
+  margin: 5em auto;
+  color: snow;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
 
-  handleChangeMobileNumber = (event) => {
-    this.setState({ mobileNumber: event.target.value });
-  };
+  @media (min-width: 786px) {
+    width: 60%;
+  }
 
-  handleChangeGpa = (event) => {
-    this.setState({ gpa: event.target.value });
-  };
+  label {
+    color: #24b9b6;
+    font-size: 1.2em;
+    font-weight: 400;
+  }
 
-  handleChangeCityName = (event) => {
-    this.setState({ cityName: event.target.value });
-  };
+  h1 {
+    color: #24b9b6;
+    padding-top: 0.5em;
+  }
 
-  handleChangeStateName = (event) => {
-    this.setState({ stateName: event.target.value });
-  };
+  .form-group {
+    margin-bottom: 2.5em;
+  }
+  .error {
+    border: 2px solid #ff6565;
+  }
+  .error-message {
+    color: #ff6565;
+    padding: 0.5em 0.2em;
+    height: 1em;
+    position: absolute;
+    font-size: 0.8em;
+  }
+  .error-asterisk {
+    color: red;
+  }
+`;
 
-  handleSubmit = (e) => {
-    
-    console.log("at start");
-    const form = e.currentTarget;
-    console.log(form.checkValidity());
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-      alert('Please enter all details');
-      this.setState({ validated: true });
-    } else {
-      const id = this.props.match.params.id;
-      console.log("on the way to post mate");
-      axios
-        .put(`http://localhost:3001/students/${id}`, {
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          address: this.state.address,  
-          mobileNumber: this.state.mobileNumber,
-          cityName: this.state.cityName,
-          stateName: this.state.stateName,
-          gpa: this.state.gpa,
-        })
-        .then((res) => console.log("posted succesfully mate"));
-      history.push("/show-data");
-    }
-  };
+const MYFORM = styled(Form)`
+  width: 90%;
+  text-align: left;
+  padding-top: 2em;
+  padding-bottom: 2em;
 
-  render() {
-    return (
-      <>
-        <h1>Hello mate, Go head and change your data </h1>
-        <div className="wrapper-edit">
-        <Form
-            noValidate
-            validated={this.state.validated}
-            onSubmit={this.handleSubmit}
-            method="GET"
-          >
-            <Form.Group controlId="firstName">
-              <Form.Label> First Name </Form.Label>{" "}
+  @media (min-width: 786px) {
+    width: 50%;
+  }
+`;
+
+const BUTTON = styled(Button)`
+  background: #1863ab;
+  border: none;
+  font-size: 1.2em;
+  font-weight: 400;
+
+  &:hover {
+    background: #1d3461;
+  }
+`;
+const mobileNumberRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+const gpaRegExp = /^[0-9]{1,3}(?:\.[0-9]{1,3})?$/;
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .min(2, "*First Name must have at least 2 characters")
+    .max(100, "*First Name can't be longer than 100 characters")
+    .required("*First Name is required"),
+  lastName: Yup.string()
+    .min(2, "*Last Name must have at least 2 characters")
+    .max(100, "*Last Name can't be longer than 100 characters")
+    .required("*Last Name is required"),
+  mobileNumber: Yup.string()
+    .matches(mobileNumberRegExp, "*Phone number is not valid")
+    .required("*Phone number is required"),
+  address: Yup.string()
+    .min(2, "*Address must have at least 2 characters")
+    .max(100, "*Address can't be longer than 100 characters")
+    .required("*Address is required"),
+  cityName: Yup.string()
+    .min(2, "*City name must have at least 2 characters")
+    .max(100, "*City Name can't be longer than 100 characters")
+    .required("*City is required"),
+  stateName: Yup.string()
+    .min(2, "*State Name must have at least 2 characters")
+    .max(100, "*State Name can't be longer than 100 characters")
+    .required("*State is required"),
+  gpa: Yup.string()
+    .matches(gpaRegExp, "*Gpa is invalid")
+    .required("*Gpa is required"),
+});
+
+function EditData(props) {
+  return (
+    <CONTAINER>
+      <Formik
+        initialValues={{
+          firstName: "",
+          lastName: "",
+          address: "",
+          mobileNumber: "",
+          cityName: "",
+          stateName: "",
+          gpa: "",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          setSubmitting(true);
+          console.log("just before post");
+          const id = props.match.params.id;
+
+          axios
+            .put(`http://localhost:3001/students/${id}`, { ...values })
+            .then((res) => console.log("edited succesfully mate"));
+          resetForm();
+          setSubmitting(false);
+          history.push("/show-data");
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+        }) => (
+          <MYFORM onSubmit={handleSubmit} className="mx-auto">
+            <Form.Group controlId="formFName">
+              <Form.Label>
+                First Name
+                <span
+                  className={
+                    touched.firstName && errors.firstName
+                      ? "error-asterisk"
+                      : null
+                  }
+                >
+                  &nbsp; *
+                </span>
+              </Form.Label>
               <Form.Control
-                required
                 type="text"
-                placeholder="Enter First Name"
-                value={this.state.firstName}
-                onChange={this.handleChangeFirstName}
-                style={{ borderRadius: "5px", margin: "5px" }}
+                name="firstName"
+                placeholder="First Name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.firstName}
+                className={
+                  touched.firstName && errors.firstName ? "error" : null
+                }
               />
-              <Form.Control.Feedback type="invalid">
-                Please enter First Name  
-              </Form.Control.Feedback>
+              {touched.firstName && errors.firstName ? (
+                <div className="error-message">{errors.firstName}</div>
+              ) : null}
             </Form.Group>
-            <Form.Group controlId="LastName">
-              <Form.Label> Last Name </Form.Label>{" "}
+            <Form.Group controlId="formLName">
+              <Form.Label>
+                Last Name
+                <span
+                  className={
+                    touched.lastName && errors.lastName
+                      ? "error-asterisk"
+                      : null
+                  }
+                >
+                  &nbsp; *
+                </span>
+              </Form.Label>
               <Form.Control
-                required
                 type="text"
-                placeholder="Enter Last Name"
-                value={this.state.lastName}
-                onChange={this.handleChangeLastName}
-                style={{ borderRadius: "5px", margin: "5px" }}
+                name="lastName"
+                placeholder="Last Name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.lastName}
+                className={touched.lastName && errors.lastName ? "error" : null}
               />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter Last Name */}
-              </Form.Control.Feedback>
+              {touched.lastName && errors.lastName ? (
+                <div className="error-message">{errors.lastName}</div>
+              ) : null}
+            </Form.Group>
+            <Form.Group controlId="formMNumber">
+              <Form.Label>
+                Mobile Number
+                <span
+                  className={
+                    touched.mobileNumber && errors.mobileNumber
+                      ? "error-asterisk"
+                      : null
+                  }
+                >
+                  &nbsp; *
+                </span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="mobileNumber"
+                placeholder="Mobile Number"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.mobileNumber}
+                className={
+                  touched.mobileNumber && errors.mobileNumber ? "error" : null
+                }
+              />
+              {touched.mobileNumber && errors.mobileNumber ? (
+                <div className="error-message">{errors.mobileNumber}</div>
+              ) : null}
             </Form.Group>
             <Form.Group controlId="formAddress">
-              <Form.Label> Enter Your Address </Form.Label>{" "}
+              <Form.Label>
+                Address
+                <span
+                  className={
+                    touched.address && errors.address ? "error-asterisk" : null
+                  }
+                >
+                  &nbsp; *
+                </span>
+              </Form.Label>
               <Form.Control
-                required
                 type="text"
-                placeholder="Enter Your Address here"
-                value={this.state.address}
-                onChange={this.handleChangeAddress}
-                style={{ borderRadius: "5px", margin: "5px" }}
+                name="address"
+                placeholder="Address"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.address}
+                className={touched.address && errors.address ? "error" : null}
               />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter your address  */}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formMobileNumber">
-              <Form.Label> Enter Mobile Number </Form.Label>{" "}
-              <Form.Control
-                required
-                type="number"
-                placeholder="Mobile Number here"
-                value={this.state.mobileNumber}
-                onChange={this.handleChangeMobileNumber}
-                style={{ borderRadius: "5px", margin: "5px" }}
-              />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter Mobile Number  */}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formGpa">
-              <Form.Label> Your Gpa </Form.Label>{" "}
-              <Form.Control
-                required
-                type="number"
-                placeholder="Enter your Gpa "
-                value={this.state.Gpa}
-                onChange={this.handleChangeGpa}
-                style={{ borderRadius: "5px", margin: "5px" }}
-              />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter Gpa  */}
-              </Form.Control.Feedback>
+              {touched.address && errors.address ? (
+                <div className="error-message">{errors.address}</div>
+              ) : null}
             </Form.Group>
             <Form.Group controlId="formCity">
-              <Form.Label> Enter CityName </Form.Label>{" "}
+              <Form.Label>
+                City Name
+                <span
+                  className={
+                    touched.cityName && errors.cityName
+                      ? "error-asterisk"
+                      : null
+                  }
+                >
+                  &nbsp; *
+                </span>
+              </Form.Label>
               <Form.Control
-                required
                 type="text"
+                name="cityName"
                 placeholder="City Name"
-                value={this.state.cityName}
-                onChange={this.handleChangeCityName}
-                style={{ borderRadius: "5px", margin: "5px" }}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.cityName}
+                className={touched.cityName && errors.cityName ? "error" : null}
               />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter City Name  */}
-              </Form.Control.Feedback>
+              {touched.cityName && errors.cityName ? (
+                <div className="error-message">{errors.cityName}</div>
+              ) : null}
             </Form.Group>
-            <Form.Group controlId="formStateName">
-              <Form.Label> Enter State </Form.Label>{" "}
+            <Form.Group controlId="formState">
+              <Form.Label>
+                State Name
+                <span
+                  className={
+                    touched.stateName && errors.stateName
+                      ? "error-asterisk"
+                      : null
+                  }
+                >
+                  &nbsp; *
+                </span>
+              </Form.Label>
               <Form.Control
-                required
+                as="select"
                 type="text"
-                placeholder="State Name here"
-                value={this.state.stateName}
-                onChange={this.handleChangeStateName}
-                style={{ borderRadius: "5px", margin: "5px" }}
+                name="stateName"
+                placeholder="State Name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.stateName}
+                className={
+                  touched.stateName && errors.stateName ? "error" : null
+                }
+              >
+                <option></option>
+                <option>Andhra Pradhesh</option>
+                <option>Arunachal Pradesh</option>
+                <option>Assam</option>
+                <option>Bihar</option>
+                <option>Chhattisgarh</option>
+                <option>Goa</option>
+                <option>Gujarat</option>
+                <option>Haryana</option>
+                <option>Himachal Pradesh</option>
+                <option>Jharkhand</option>
+                <option>Karnataka</option>
+                <option>Kerala</option>
+                <option>Madhya Pradesh</option>
+                <option>Maharashtra</option>
+                <option>Manipur</option>
+                <option>Meghalaya</option>
+                <option>Mizoram</option>
+                <option>Nagaland</option>
+                <option>Odisha</option>
+                <option>Punjab</option>
+                <option>Rajasthan</option>
+                <option>Sikkim</option>
+                <option>Tamil Nadu</option>
+                <option>Telangana</option>
+                <option>Tripura</option>
+                <option>Uttar Pradesh</option>
+                <option>Uttarakhand</option>
+                <option>West Bengal</option>
+            </Form.Control>
+              {touched.stateName && errors.stateName ? (
+                <div className="error-message">{errors.stateName}</div>
+              ) : null}
+            </Form.Group>
+            <Form.Group controlId="formGpa">
+              <Form.Label>
+                Gpa
+                <span
+                  className={
+                    touched.gpa && errors.gpa ? "error-asterisk" : null
+                  }
+                >
+                  &nbsp; *
+                </span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="gpa"
+                placeholder="Gpa"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.gpa}
+                className={touched.gpa && errors.gpa ? "error" : null}
               />
-              <Form.Control.Feedback type="invalid">
-                {/* Please enter you State Name  */}
-              </Form.Control.Feedback>
-            </Form.Group>{" "}
-            <Row> <button>Submit</button> </Row>{' '}
-          </Form>{" "}
-        </div>
-      </>
-    );
-  }
+              {touched.gpa && errors.gpa ? (
+                <div className="error-message">{errors.gpa}</div>
+              ) : null}
+            </Form.Group>
+            <BUTTON variant="primary" type="submit" disabled={isSubmitting}>
+              Submit
+            </BUTTON>
+          </MYFORM>
+        )}
+      </Formik>
+    </CONTAINER>
+  );
 }
+
 export default EditData;

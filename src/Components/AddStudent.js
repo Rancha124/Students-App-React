@@ -45,6 +45,9 @@ const CONTAINER = styled.div`
     position: absolute;
     font-size: .8em;
   }
+  .error-asterisk {
+    color: red;
+  }
 `;
 
 const MYFORM = styled(Form)`
@@ -69,39 +72,45 @@ const BUTTON = styled(Button)`
   }
 `;
 const mobileNumberRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
+const gpaRegExp = /^[0-9]{1,3}(?:\.[0-9]{1,3})?$/
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
-  .min(2, "*Names must have at least 2 characters")
-  .max(100, "*Names can't be longer than 100 characters")
-  .required("*Name is required"),
+  .min(2, "*First Name must have at least 2 characters")
+  .max(100, "*First Name can't be longer than 100 characters")
+  .required("*First Name is required"),
   lastName: Yup.string()
-  .min(2, "*Names must have at least 2 characters")
-  .max(100, "*Names can't be longer than 100 characters")
-  .required("*Name is required"),
+  .min(2, "*Last Name must have at least 2 characters")
+  .max(100, "*Last Name can't be longer than 100 characters")
+  .required("*Last Name is required"),
   mobileNumber: Yup.string()
   .matches(mobileNumberRegExp, "*Phone number is not valid")
-  .required("*Phone number required"),
+  .required("*Phone number is required"),
   address: Yup.string()
-  .min(2, "*Names must have at least 2 characters")
-  .max(100, "*Names can't be longer than 100 characters")
-  .required("*Name is required"),
+  .min(2, "*Address must have at least 2 characters")
+  .max(100, "*Address can't be longer than 100 characters")
+  .required("*Address is required"),
   cityName: Yup.string()
-  .min(2, "*Names must have at least 2 characters")
-  .max(100, "*Names can't be longer than 100 characters")
-  .required("*Name is required"),
+  .min(2, "*City name must have at least 2 characters")
+  .max(100, "*City Name can't be longer than 100 characters")
+  .required("*City is required"),
   stateName: Yup.string()
-  .min(2, "*Names must have at least 2 characters")
-  .max(100, "*Names can't be longer than 100 characters")
-  .required("*Name is required"),
+  .min(2, "*State Name must have at least 2 characters")
+  .max(100, "*State Name can't be longer than 100 characters")
+  .required("*State is required"),
   gpa: Yup.string()
-  .min(2, "*Names must have at least 2 characters")
-  .max(100, "*Names can't be longer than 100 characters")
-  .required("*Name is required"),
+  .matches(gpaRegExp, "*Gpa is invalid")
+  .required("*Gpa is required"),
 });
 
-const AddStudent = () => {
+function AddStudent() {
   return (
+    <>
+   <div style={{width: "60%",margin:"25px auto 25px auto",
+   backgroundColor: "lightgray",height: "auto", paddingTop:"20px",paddingBottom: "20px"}}>
+      <h2>Hello there mate, go on and enter your details</h2>
+    </div>
     <CONTAINER>
+    
       <Formik initialValues={{ firstName:"", lastName:"",
        address:"", mobileNumber:"",cityName: "",stateName: "",gpa: ""}}
        validationSchema={validationSchema} 
@@ -131,7 +140,10 @@ const AddStudent = () => {
           isSubmitting }) => (
       <MYFORM onSubmit={handleSubmit}  className="mx-auto">
         <Form.Group controlId="formFName">
-          <Form.Label>First Name :</Form.Label>
+          <Form.Label>First Name  
+            <span className={touched.firstName && errors.firstName ? "error-asterisk" : null} >
+            &nbsp; *</span>
+          </Form.Label>
           <Form.Control
             type="text"
             name="firstName"
@@ -146,7 +158,10 @@ const AddStudent = () => {
               ): null}
         </Form.Group>
         <Form.Group controlId="formLName">
-          <Form.Label>Last Name :</Form.Label>
+          <Form.Label>Last Name 
+            <span className={touched.lastName && errors.lastName ? "error-asterisk" : null} >
+            &nbsp; *</span>
+          </Form.Label>
           <Form.Control
             type="text"
             name="lastName"
@@ -161,7 +176,10 @@ const AddStudent = () => {
               ): null}
         </Form.Group>
         <Form.Group controlId="formMNumber">
-          <Form.Label>Mobile Number :</Form.Label>
+          <Form.Label>Mobile Number
+            <span className={touched.mobileNumber && errors.mobileNumber ? "error-asterisk" : null} >
+            &nbsp; *</span>
+          </Form.Label>
           <Form.Control
             type="text"
             name="mobileNumber"
@@ -176,7 +194,10 @@ const AddStudent = () => {
               ): null}
         </Form.Group>
         <Form.Group controlId="formAddress">
-          <Form.Label>Address :</Form.Label>
+          <Form.Label>Address
+            <span className={touched.address && errors.address ? "error-asterisk" : null} >
+            &nbsp; *</span>
+          </Form.Label>
           <Form.Control
             type="text"
             name="address"
@@ -191,7 +212,10 @@ const AddStudent = () => {
               ): null}
         </Form.Group>
         <Form.Group controlId="formCity">
-          <Form.Label>City Name:</Form.Label>
+          <Form.Label>City Name
+            <span className={touched.cityName && errors.cityName ? "error-asterisk" : null} >
+            &nbsp; *</span>
+          </Form.Label>
           <Form.Control
             type="text"
             name="cityName"
@@ -206,22 +230,61 @@ const AddStudent = () => {
               ): null}
         </Form.Group>
         <Form.Group controlId="formState">
-          <Form.Label>State Name :</Form.Label>
+          <Form.Label>State Name
+            <span className={touched.stateName && errors.stateName ? "error-asterisk" : null} >
+            &nbsp; *</span>
+          </Form.Label>
           <Form.Control
-            type="text"
-            name="stateName"
-            placeholder="State Name"
-            onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.stateName}
-              className={touched.stateName && errors.stateName ? "error" : null}
-            />
+                as="select"
+                type="text"
+                name="stateName"
+                placeholder="State Name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.stateName}
+                className={
+                  touched.stateName && errors.stateName ? "error" : null
+                }
+              >
+                <option></option>
+                <option>Andhra Pradhesh</option>
+                <option>Arunachal Pradesh</option>
+                <option>Assam</option>
+                <option>Bihar</option>
+                <option>Chhattisgarh</option>
+                <option>Goa</option>
+                <option>Gujarat</option>
+                <option>Haryana</option>
+                <option>Himachal Pradesh</option>
+                <option>Jharkhand</option>
+                <option>Karnataka</option>
+                <option>Kerala</option>
+                <option>Madhya Pradesh</option>
+                <option>Maharashtra</option>
+                <option>Manipur</option>
+                <option>Meghalaya</option>
+                <option>Mizoram</option>
+                <option>Nagaland</option>
+                <option>Odisha</option>
+                <option>Punjab</option>
+                <option>Rajasthan</option>
+                <option>Sikkim</option>
+                <option>Tamil Nadu</option>
+                <option>Telangana</option>
+                <option>Tripura</option>
+                <option>Uttar Pradesh</option>
+                <option>Uttarakhand</option>
+                <option>West Bengal</option>
+            </Form.Control>
              {touched.stateName && errors.stateName ? (
                 <div className="error-message">{errors.stateName}</div>
               ): null}
         </Form.Group>
         <Form.Group controlId="formGpa">
-          <Form.Label>Gpa :</Form.Label>
+          <Form.Label>Gpa
+            <span className={touched.gpa && errors.gpa ? "error-asterisk" : null} >
+            &nbsp; *</span>
+          </Form.Label>
           <Form.Control
             type="text"
             name="gpa"
@@ -242,6 +305,7 @@ const AddStudent = () => {
           )}
       </Formik>
     </CONTAINER>
+  </>
   );
 }
 

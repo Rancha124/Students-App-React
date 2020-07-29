@@ -2,26 +2,42 @@ import React from "react";
 import axios from "axios";
 import history from "../../services/history";
 import { Table, Button } from "react-bootstrap";
+
 class ShowData extends React.Component {
   state = {
     students: [],
     dummy: false,
   };
   componentDidMount() {
-    axios.get("http://localhost:3001/students").then((result) => {
+    axios.get("http://localhost:3001/students")
+    .then((result) => {
       this.setState({ students: result.data });
   
     });
+    this.setState({dummy: !this.state.dummy})
   }
-
+  componentDidUpdate(pP,pS){
+   
+   if(pS.students === this.state.students){
+    axios.get("http://localhost:3001/students")
+    .then((result) => {
+      this.setState({ students: result.data });
+  
+    });
+   } 
+   
+  }
   deleteData = (index) => {
     const id = this.state.students[index].id;
     axios
       .delete(`http://localhost:3001/students/${id}`)
-      .then(this.setState({ dummy: false }));
-    axios.get("http://localhost:3001/students").then((result) => {
-      this.setState({ students: result.data });
-    });
+      .then(
+        axios.get("http://localhost:3001/students").then((result) => {
+          this.setState({ students: result.data })
+        })
+      );
+    
+   
   };
   showEntireDetails = (index) => {
     const id = this.state.students[index].id;
@@ -32,9 +48,14 @@ class ShowData extends React.Component {
   editThisData = (index) => {
     const id = this.state.students[index].id;
     history.push(`/edit_data/${id}`);
+    axios
+      .get(`http://localhost:3001/students/${id}`)
+      .then((res) => this.setState({students: res.data}))
+    
   };
   render() {
     return (
+      <>
       <div className="container" style={{ backgroundColor: "lightgray" }}>
         <div
           style={{
@@ -59,12 +80,17 @@ class ShowData extends React.Component {
               <tr>
                 <th>#</th>
                 <th>First Name</th>
+                <th>Last Name</th>
+                <th>Mobile Number</th>
+                <th>City Name</th>
+                <th>State Name</th>
+                <th>Gpa</th>
                 <th>Full Details</th>
-                <th>Delete data</th>
                 <th>Edit data</th>
+                <th>Delete data</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{textAlign: "center"}}>
               {this.state.students.map((obj, index) => {
                 return (
                   <tr key={index}>
@@ -73,6 +99,21 @@ class ShowData extends React.Component {
                     </td>
                     <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
                       {obj.firstName}
+                    </td>
+                    <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+                      {obj.lastName}
+                    </td>
+                    <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+                      {obj.mobileNumber}
+                    </td>
+                    <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+                      {obj.cityName}
+                    </td>
+                    <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+                      {obj.stateName}
+                    </td>
+                    <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+                      {obj.gpa}
                     </td>
                     <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
                       {" "}
@@ -85,21 +126,19 @@ class ShowData extends React.Component {
                     </td>
                     <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
                       {" "}
-                      <Button
-                        style={{ borderRadius: "5px", cursor: "pointer" }}
-                        onClick={() => this.deleteData(index)}
+                      <i className="fa fa-edit" style={{color: 'green',
+                      fontSize: '2em',paddingTop:'5px',cursor: "pointer"}}
+                      onClick={() => this.editThisData(index)}
                       >
-                        Delete this Data
-                      </Button>{" "}
+                      </i>{" "}
                     </td>
                     <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
                       {" "}
-                      <Button
-                        style={{ borderRadius: "5px", cursor: "pointer" }}
-                        onClick={() => this.editThisData(index)}
+                      <i className="fa fa-trash" style={{color: 'red',
+                      fontSize: '2em',paddingTop:'5px',cursor: "pointer"}}
+                        onClick={() => this.deleteData(index)}
                       >
-                        Edit this Data
-                      </Button>{" "}
+                    </i>{" "}
                     </td>
                   </tr>
                 );
@@ -112,6 +151,9 @@ class ShowData extends React.Component {
               borderRadius: "5px",
               height: "2em",
               cursor: "pointer",
+              textAlign: "center",
+              paddingBottom: "20px",
+              paddingTop: "2px"
             }}
             onClick={() => history.push("/")}
           >
@@ -119,6 +161,7 @@ class ShowData extends React.Component {
           </Button>
         </div>
       </div>
+      </>
     );
   }
 }

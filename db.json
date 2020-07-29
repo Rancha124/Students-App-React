@@ -1,133 +1,33 @@
 {
   "students": [
     {
-      "firstName": "Zebra",
-      "lastName": "Sai",
-      "address": "1-5-112",
-      "mobileNumber": "08179964228",
-      "cityName": "VISAKHAPATNAM",
-      "stateName": "UP",
-      "gpa": "65",
-      "id": 2
-    },
-    {
-      "firstName": "Ram Konidela",
-      "lastName": "Charan",
-      "address": "Jublie Hills",
-      "mobileNumber": "7897945689",
-      "cityName": "IndraPur",
-      "stateName": "Jamuna Park",
-      "gpa": "898",
-      "id": 3
-    },
-    {
       "firstName": "Charan",
       "lastName": "Sai",
       "address": "1-5-112",
-      "mobileNumber": "08179964228",
-      "cityName": "VISAKHAPATNAM",
-      "stateName": "Old municipality office backside",
-      "gpa": "",
-      "id": 9
+      "mobileNumber": "8179964228",
+      "cityName": "Vizag",
+      "stateName": "Andhra Pradhesh",
+      "gpa": "6.79",
+      "id": 22
     },
     {
-      "firstName": "Bill",
-      "lastName": "Gates",
-      "address": "45789789",
-      "mobileNumber": "565897979",
-      "cityName": "chicago",
-      "stateName": "America",
-      "gpa": "9.3",
-      "id": 11
-    },
-    {
-      "firstName": "Nanda",
-      "lastName": "Gopal",
-      "address": "Undarajavaram",
-      "mobileNumber": "897897989",
-      "cityName": "Gudivada",
-      "stateName": "AP",
-      "gpa": "10",
-      "id": 14
-    },
-    {
-      "firstName": "Allu",
-      "lastName": "Arjun",
-      "address": "Madhapur",
-      "mobileNumber": "89745566",
-      "cityName": "Mind Space",
-      "stateName": "MP",
-      "gpa": "98",
-      "id": 15
-    },
-    {
-      "firstName": "Julia",
-      "lastName": "Begam",
-      "address": "7549",
-      "mobileNumber": "8974498789",
-      "cityName": "Hyderabad",
-      "stateName": "Telangana",
-      "gpa": "78",
-      "id": 16
-    },
-    {
-      "firstName": "Prabhas",
-      "lastName": "Shiva",
-      "address": "456789",
-      "mobileNumber": "465789789",
-      "cityName": "Op",
-      "stateName": "Op",
-      "gpa": "99",
-      "id": 17
-    },
-    {
-      "firstName": "Monalisa",
-      "lastName": "Kucharla",
-      "address": "789979",
-      "mobileNumber": "46546465",
-      "cityName": "AP",
-      "stateName": "Ko",
-      "gpa": "98",
-      "id": 18
-    },
-    {
-      "firstName": "Anushka",
-      "lastName": "Shetty",
-      "address": "1-5-112",
-      "mobileNumber": "08179964228",
-      "cityName": "Hyderabad",
-      "stateName": "Telangana",
-      "gpa": "86",
-      "id": 19
-    },
-    {
-      "firstName": "ChanChad ",
-      "lastName": "the Second",
-      "address": "1-5-112",
-      "mobileNumber": "08179964228",
-      "cityName": "VISAKHAPATNAM",
-      "stateName": "AP",
-      "gpa": "9.6",
+      "firstName": "Kumar ",
+      "lastName": "Verma",
+      "address": "Plot-897",
+      "mobileNumber": "78956555",
+      "cityName": "Mayapur",
+      "stateName": "Punjab",
+      "gpa": "7.5",
       "id": 23
     },
     {
-      "firstName": "Rav Gopal",
-      "lastName": "Varma",
-      "address": "Panjagutta",
-      "mobileNumber": "657894567",
-      "cityName": "Jublie Hills",
-      "stateName": "Hyderabad",
-      "gpa": "9.3",
-      "id": 24
-    },
-    {
-      "firstName": "Lion",
-      "lastName": "Animal",
-      "address": "Zoo",
-      "mobileNumber": "7895678989",
-      "cityName": "Forest",
-      "stateName": "Jungle",
-      "gpa": "95",
+      "firstName": "Raju",
+      "lastName": "Patel",
+      "address": "Plot-989",
+      "mobileNumber": "5678979",
+      "cityName": "Chennai",
+      "stateName": "Tamil Nadu",
+      "gpa": "5.7",
       "id": 25
     }
   ]
