@@ -7,7 +7,7 @@
       "mobileNumber": "7895646489",
       "cityName": "Mythur",
       "stateName": "Odisha",
-      "gpa": "7.87",
+      "gpa": "7.88",
       "id": 22
     },
     {
@@ -19,6 +19,16 @@
       "stateName": "Tamil Nadu",
       "gpa": "7.8",
       "id": 25
+    },
+    {
+      "firstName": "Govindh",
+      "lastName": "Rama",
+      "address": "Plot-77",
+      "mobileNumber": "789794654",
+      "cityName": "Tirupathi",
+      "stateName": "Andhra Pradhesh",
+      "gpa": "8.5",
+      "id": 26
     }
   ]
 }

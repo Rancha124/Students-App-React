@@ -104,281 +104,283 @@ const validationSchema = Yup.object().shape({
 
 class EditData extends React.Component {
   state = {
-    students: [ ],
-    
+    students: [],
   };
   componentDidMount() {
-    const id = this.props.match.params.id; 
-    axios.get(`http://localhost:3001/students/${id}`)
-    .then((result) => {
-      this.setState({ students: result.data })
+    const id = this.props.match.params.id;
+    axios.get(`http://localhost:3001/students/${id}`).then((result) => {
+      this.setState({ students: result.data });
       console.log(result.data);
-      ;
-  
     });
-    console.log("Edit data")
+    console.log("Edit data");
   }
-render(){
-  return (
-    <CONTAINER>
-      
-      <Formik enableReinitialize
-        initialValues = {{
-          firstName: this.state.students.firstName,
-          lastName: this.state.students.lastName,
-          address: this.state.students.address,
-          mobileNumber: this.state.students.mobileNumber,
-          cityName: this.state.students.cityName,
-          stateName: this.state.students.stateName,
-          gpa: this.state.students.gpa,
-        }}
-        validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          setSubmitting(true);
-          console.log("just before post");
-          const id = this.props.match.params.id;
+  render() {
+    return (
+      <CONTAINER>
+        <Formik
+          enableReinitialize
+          initialValues={{
+            firstName: this.state.students.firstName,
+            lastName: this.state.students.lastName,
+            address: this.state.students.address,
+            mobileNumber: this.state.students.mobileNumber,
+            cityName: this.state.students.cityName,
+            stateName: this.state.students.stateName,
+            gpa: this.state.students.gpa,
+          }}
+          validationSchema={validationSchema}
+          onSubmit={(values, { setSubmitting, resetForm }) => {
+            setSubmitting(true);
+            console.log("just before post");
+            const id = this.props.match.params.id;
 
-          axios
-            .put(`http://localhost:3001/students/${id}`, { ...values })
-            .then((res) => console.log("edited succesfully mate"));
-          resetForm();
-          setSubmitting(false);
-          history.push("/show-data");
-        }}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
-          <MYFORM onSubmit={handleSubmit} className="mx-auto">
-            <Form.Group controlId="formFName">
-              <Form.Label>
-                First Name
-                <span
+            axios
+              .put(`http://localhost:3001/students/${id}`, { ...values })
+              .then((res) => console.log("edited succesfully mate"));
+            resetForm();
+            setSubmitting(false);
+            history.push("/show-data");
+          }}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <MYFORM onSubmit={handleSubmit} className="mx-auto">
+              <Form.Group controlId="formFName">
+                <Form.Label>
+                  First Name
+                  <span
+                    className={
+                      touched.firstName && errors.firstName
+                        ? "error-asterisk"
+                        : null
+                    }
+                  >
+                    &nbsp; *
+                  </span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.firstName}
                   className={
-                    touched.firstName && errors.firstName
-                      ? "error-asterisk"
-                      : null
+                    touched.firstName && errors.firstName ? "error" : null
+                  }
+                />
+                {touched.firstName && errors.firstName ? (
+                  <div className="error-message">{errors.firstName}</div>
+                ) : null}
+              </Form.Group>
+              <Form.Group controlId="formLName">
+                <Form.Label>
+                  Last Name
+                  <span
+                    className={
+                      touched.lastName && errors.lastName
+                        ? "error-asterisk"
+                        : null
+                    }
+                  >
+                    &nbsp; *
+                  </span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.lastName}
+                  className={
+                    touched.lastName && errors.lastName ? "error" : null
+                  }
+                />
+                {touched.lastName && errors.lastName ? (
+                  <div className="error-message">{errors.lastName}</div>
+                ) : null}
+              </Form.Group>
+              <Form.Group controlId="formMNumber">
+                <Form.Label>
+                  Mobile Number
+                  <span
+                    className={
+                      touched.mobileNumber && errors.mobileNumber
+                        ? "error-asterisk"
+                        : null
+                    }
+                  >
+                    &nbsp; *
+                  </span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="mobileNumber"
+                  placeholder="Mobile Number"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.mobileNumber}
+                  className={
+                    touched.mobileNumber && errors.mobileNumber ? "error" : null
+                  }
+                />
+                {touched.mobileNumber && errors.mobileNumber ? (
+                  <div className="error-message">{errors.mobileNumber}</div>
+                ) : null}
+              </Form.Group>
+              <Form.Group controlId="formAddress">
+                <Form.Label>
+                  Address
+                  <span
+                    className={
+                      touched.address && errors.address
+                        ? "error-asterisk"
+                        : null
+                    }
+                  >
+                    &nbsp; *
+                  </span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="address"
+                  placeholder="Address"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.address}
+                  className={touched.address && errors.address ? "error" : null}
+                />
+                {touched.address && errors.address ? (
+                  <div className="error-message">{errors.address}</div>
+                ) : null}
+              </Form.Group>
+              <Form.Group controlId="formCity">
+                <Form.Label>
+                  City Name
+                  <span
+                    className={
+                      touched.cityName && errors.cityName
+                        ? "error-asterisk"
+                        : null
+                    }
+                  >
+                    &nbsp; *
+                  </span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="cityName"
+                  placeholder="City Name"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.cityName}
+                  className={
+                    touched.cityName && errors.cityName ? "error" : null
+                  }
+                />
+                {touched.cityName && errors.cityName ? (
+                  <div className="error-message">{errors.cityName}</div>
+                ) : null}
+              </Form.Group>
+              <Form.Group controlId="formState">
+                <Form.Label>
+                  State Name
+                  <span
+                    className={
+                      touched.stateName && errors.stateName
+                        ? "error-asterisk"
+                        : null
+                    }
+                  >
+                    &nbsp; *
+                  </span>
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  type="text"
+                  name="stateName"
+                  placeholder="State Name"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.stateName}
+                  className={
+                    touched.stateName && errors.stateName ? "error" : null
                   }
                 >
-                  &nbsp; *
-                </span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="firstName"
-                placeholder="First Name"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.firstName}
-                className={
-                  touched.firstName && errors.firstName ? "error" : null
-                }
-              />
-              {touched.firstName && errors.firstName ? (
-                <div className="error-message">{errors.firstName}</div>
-              ) : null}
-            </Form.Group>
-            <Form.Group controlId="formLName">
-              <Form.Label>
-                Last Name
-                <span
-                  className={
-                    touched.lastName && errors.lastName
-                      ? "error-asterisk"
-                      : null
-                  }
-                >
-                  &nbsp; *
-                </span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="lastName"
-                placeholder="Last Name"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.lastName}
-                className={touched.lastName && errors.lastName ? "error" : null}
-              />
-              {touched.lastName && errors.lastName ? (
-                <div className="error-message">{errors.lastName}</div>
-              ) : null}
-            </Form.Group>
-            <Form.Group controlId="formMNumber">
-              <Form.Label>
-                Mobile Number
-                <span
-                  className={
-                    touched.mobileNumber && errors.mobileNumber
-                      ? "error-asterisk"
-                      : null
-                  }
-                >
-                  &nbsp; *
-                </span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="mobileNumber"
-                placeholder="Mobile Number"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.mobileNumber}
-                className={
-                  touched.mobileNumber && errors.mobileNumber ? "error" : null
-                }
-              />
-              {touched.mobileNumber && errors.mobileNumber ? (
-                <div className="error-message">{errors.mobileNumber}</div>
-              ) : null}
-            </Form.Group>
-            <Form.Group controlId="formAddress">
-              <Form.Label>
-                Address
-                <span
-                  className={
-                    touched.address && errors.address ? "error-asterisk" : null
-                  }
-                >
-                  &nbsp; *
-                </span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="address"
-                placeholder="Address"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.address}
-                className={touched.address && errors.address ? "error" : null}
-              />
-              {touched.address && errors.address ? (
-                <div className="error-message">{errors.address}</div>
-              ) : null}
-            </Form.Group>
-            <Form.Group controlId="formCity">
-              <Form.Label>
-                City Name
-                <span
-                  className={
-                    touched.cityName && errors.cityName
-                      ? "error-asterisk"
-                      : null
-                  }
-                >
-                  &nbsp; *
-                </span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="cityName"
-                placeholder="City Name"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.cityName}
-                className={touched.cityName && errors.cityName ? "error" : null}
-              />
-              {touched.cityName && errors.cityName ? (
-                <div className="error-message">{errors.cityName}</div>
-              ) : null}
-            </Form.Group>
-            <Form.Group controlId="formState">
-              <Form.Label>
-                State Name
-                <span
-                  className={
-                    touched.stateName && errors.stateName
-                      ? "error-asterisk"
-                      : null
-                  }
-                >
-                  &nbsp; *
-                </span>
-              </Form.Label>
-              <Form.Control
-                as="select"
-                type="text"
-                name="stateName"
-                placeholder="State Name"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.stateName}
-                className={
-                  touched.stateName && errors.stateName ? "error" : null
-                }
-              >
-                <option></option>
-                <option>Andhra Pradhesh</option>
-                <option>Arunachal Pradesh</option>
-                <option>Assam</option>
-                <option>Bihar</option>
-                <option>Chhattisgarh</option>
-                <option>Goa</option>
-                <option>Gujarat</option>
-                <option>Haryana</option>
-                <option>Himachal Pradesh</option>
-                <option>Jharkhand</option>
-                <option>Karnataka</option>
-                <option>Kerala</option>
-                <option>Madhya Pradesh</option>
-                <option>Maharashtra</option>
-                <option>Manipur</option>
-                <option>Meghalaya</option>
-                <option>Mizoram</option>
-                <option>Nagaland</option>
-                <option>Odisha</option>
-                <option>Punjab</option>
-                <option>Rajasthan</option>
-                <option>Sikkim</option>
-                <option>Tamil Nadu</option>
-                <option>Telangana</option>
-                <option>Tripura</option>
-                <option>Uttar Pradesh</option>
-                <option>Uttarakhand</option>
-                <option>West Bengal</option>
-            </Form.Control>
-              {touched.stateName && errors.stateName ? (
-                <div className="error-message">{errors.stateName}</div>
-              ) : null}
-            </Form.Group>
-            <Form.Group controlId="formGpa">
-              <Form.Label>
-                Gpa
-                <span
-                  className={
-                    touched.gpa && errors.gpa ? "error-asterisk" : null
-                  }
-                >
-                  &nbsp; *
-                </span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="gpa"
-                placeholder="Gpa"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.gpa}
-                className={touched.gpa && errors.gpa ? "error" : null}
-              />
-              {touched.gpa && errors.gpa ? (
-                <div className="error-message">{errors.gpa}</div>
-              ) : null}
-            </Form.Group>
-            <BUTTON variant="primary" type="submit" disabled={isSubmitting}>
-              Submit
-            </BUTTON>
-          </MYFORM>
-        )}
-      </Formik>
-    </CONTAINER>
-  );
-}
+                  <option></option>
+                  <option>Andhra Pradhesh</option>
+                  <option>Arunachal Pradesh</option>
+                  <option>Assam</option>
+                  <option>Bihar</option>
+                  <option>Chhattisgarh</option>
+                  <option>Goa</option>
+                  <option>Gujarat</option>
+                  <option>Haryana</option>
+                  <option>Himachal Pradesh</option>
+                  <option>Jharkhand</option>
+                  <option>Karnataka</option>
+                  <option>Kerala</option>
+                  <option>Madhya Pradesh</option>
+                  <option>Maharashtra</option>
+                  <option>Manipur</option>
+                  <option>Meghalaya</option>
+                  <option>Mizoram</option>
+                  <option>Nagaland</option>
+                  <option>Odisha</option>
+                  <option>Punjab</option>
+                  <option>Rajasthan</option>
+                  <option>Sikkim</option>
+                  <option>Tamil Nadu</option>
+                  <option>Telangana</option>
+                  <option>Tripura</option>
+                  <option>Uttar Pradesh</option>
+                  <option>Uttarakhand</option>
+                  <option>West Bengal</option>
+                </Form.Control>
+                {touched.stateName && errors.stateName ? (
+                  <div className="error-message">{errors.stateName}</div>
+                ) : null}
+              </Form.Group>
+              <Form.Group controlId="formGpa">
+                <Form.Label>
+                  Gpa
+                  <span
+                    className={
+                      touched.gpa && errors.gpa ? "error-asterisk" : null
+                    }
+                  >
+                    &nbsp; *
+                  </span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="gpa"
+                  placeholder="Gpa"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.gpa}
+                  className={touched.gpa && errors.gpa ? "error" : null}
+                />
+                {touched.gpa && errors.gpa ? (
+                  <div className="error-message">{errors.gpa}</div>
+                ) : null}
+              </Form.Group>
+              <BUTTON variant="primary" type="submit" disabled={isSubmitting}>
+                Submit
+              </BUTTON>
+            </MYFORM>
+          )}
+        </Formik>
+      </CONTAINER>
+    );
+  }
 }
 export default EditData;
