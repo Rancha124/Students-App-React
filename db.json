@@ -1,24 +1,14 @@
 {
   "students": [
     {
-      "firstName": "Charan",
-      "lastName": "Sai",
-      "address": "1-5-112",
-      "mobileNumber": "8179964228",
-      "cityName": "Vizag",
-      "stateName": "Andhra Pradhesh",
-      "gpa": "6.79",
+      "firstName": "Jadhu",
+      "lastName": "Beta",
+      "address": "Greek",
+      "mobileNumber": "7895646489",
+      "cityName": "Mythur",
+      "stateName": "Odisha",
+      "gpa": "7.87",
       "id": 22
-    },
-    {
-      "firstName": "Kumar ",
-      "lastName": "Verma",
-      "address": "Plot-897",
-      "mobileNumber": "78956555",
-      "cityName": "Mayapur",
-      "stateName": "Punjab",
-      "gpa": "7.5",
-      "id": 23
     },
     {
       "firstName": "Raju",
@@ -27,7 +17,7 @@
       "mobileNumber": "5678979",
       "cityName": "Chennai",
       "stateName": "Tamil Nadu",
-      "gpa": "5.7",
+      "gpa": "7.8",
       "id": 25
     }
   ]

@@ -102,24 +102,41 @@ const validationSchema = Yup.object().shape({
     .required("*Gpa is required"),
 });
 
-function EditData(props) {
+class EditData extends React.Component {
+  state = {
+    students: [ ],
+    
+  };
+  componentDidMount() {
+    const id = this.props.match.params.id; 
+    axios.get(`http://localhost:3001/students/${id}`)
+    .then((result) => {
+      this.setState({ students: result.data })
+      console.log(result.data);
+      ;
+  
+    });
+    console.log("Edit data")
+  }
+render(){
   return (
     <CONTAINER>
-      <Formik
-        initialValues={{
-          firstName: "",
-          lastName: "",
-          address: "",
-          mobileNumber: "",
-          cityName: "",
-          stateName: "",
-          gpa: "",
+      
+      <Formik enableReinitialize
+        initialValues = {{
+          firstName: this.state.students.firstName,
+          lastName: this.state.students.lastName,
+          address: this.state.students.address,
+          mobileNumber: this.state.students.mobileNumber,
+          cityName: this.state.students.cityName,
+          stateName: this.state.students.stateName,
+          gpa: this.state.students.gpa,
         }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
           console.log("just before post");
-          const id = props.match.params.id;
+          const id = this.props.match.params.id;
 
           axios
             .put(`http://localhost:3001/students/${id}`, { ...values })
@@ -363,5 +380,5 @@ function EditData(props) {
     </CONTAINER>
   );
 }
-
+}
 export default EditData;
