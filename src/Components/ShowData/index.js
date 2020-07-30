@@ -21,13 +21,16 @@ class ShowData extends React.Component {
       });
     }
   }
-  deleteData = (index) => {
+  deleteData = async (index) => {
     const id = this.state.students[index].id;
-    axios.delete(`http://localhost:3001/students/${id}`).then(
-      axios.get("http://localhost:3001/students").then((result) => {
-        this.setState({ students: result.data });
-      })
-    );
+    try {
+      await axios.delete(`http://localhost:3001/students/${id}`)
+      const result = await axios.get("http://localhost:3001/students")
+      this.setState({ students: result.data })
+    } catch (e) {
+      console.error(e)
+      alert(e)
+    }
   };
   showEntireDetails = (index) => {
     const id = this.state.students[index].id;
