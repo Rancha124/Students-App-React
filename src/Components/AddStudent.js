@@ -136,10 +136,10 @@ function AddStudent() {
               .post("http://localhost:3001/students", { ...values })
               .then((res) => {
                 console.log("posted Succesfully");
+                resetForm();
+                setSubmitting(false);
+                history.push("/show-data");
               });
-            resetForm();
-            setSubmitting(false);
-            history.push("/show-data");
           }}
         >
           {({
