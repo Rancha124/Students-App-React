@@ -149,7 +149,6 @@ function AddStudent(props) {
                 setSubmitting(false);
                 history.push("/show-data");
               });
-            
           }}
         >
           {({
