@@ -1,45 +1,49 @@
 import React from "react";
-import axios from "axios";
 import history from "../../services/history";
 import { Table, Button } from "react-bootstrap";
+import apiHandler from "../../services/apiHandler";
 
 class ShowData extends React.Component {
   state = {
     students: [],
     dummy: false,
   };
-  componentDidMount() {
-    axios.get("http://localhost:3001/students").then((result) => {
+   componentDidMount() {
+     apiHandler.get("/").then((result) => {
       this.setState({ students: result.data });
     });
-    this.setState({ dummy: !this.state.dummy });
+  this.setState({ dummy: !this.state.dummy });
   }
   componentDidUpdate(pP, pS) {
     if (pS.students === this.state.students) {
-      axios.get("http://localhost:3001/students").then((result) => {
+      apiHandler.get("/").then((result) => {
         this.setState({ students: result.data });
       });
     }
   }
-  deleteData = (index) => {
+  deleteData = async (index) => {
     const id = this.state.students[index].id;
-    axios.delete(`http://localhost:3001/students/${id}`).then(
-      axios.get("http://localhost:3001/students").then((result) => {
-        this.setState({ students: result.data });
-      })
-    );
+    try{
+      await  apiHandler.delete(`/${id}`)
+      const result = await apiHandler.get("/")
+      this.setState({ students: result.data });
+    } catch (e){
+      console.log(e)
+      alert(e)
+    }
+    
   };
   showEntireDetails = (index) => {
     const id = this.state.students[index].id;
-    axios
-      .get(`http://localhost:3001/students/${id}`)
+    apiHandler
+      .get(`/${id}`)
       .then(history.push(`/full_details/${id}`));
   };
   editThisData = (index) => {
     const id = this.state.students[index].id;
     history.push(`/edit_data/${id}`);
-    axios
-      .get(`http://localhost:3001/students/${id}`)
+    apiHandler
+      .get(`/${id}`)
       .then((res) => this.setState({ students: res.data }));
   };
   render() {

@@ -1,7 +1,7 @@
 import React from "react";
-import axios from "axios";
 import { Table, Button } from "react-bootstrap";
 import history from "../../src/services/history";
+import apiHandler from "../services/apiHandler";
 class FullDetails extends React.Component {
   state = {
     student: [],
@@ -9,7 +9,7 @@ class FullDetails extends React.Component {
   };
   componentDidMount() {
     const id = this.props.match.params.id;
-    axios.get(`http://localhost:3001/students/${id}`).then((result) => {
+    apiHandler.get(`/${id}`).then((result) => {
       this.setState({ student: result.data });
     });
   }

@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Form, Button } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import history from "../services/history";
+import apiHandler from "../services/apiHandler";
 
 // Styled-components styles
 const CONTAINER = styled.div`
@@ -108,13 +108,19 @@ class EditData extends React.Component {
   };
   componentDidMount() {
     const id = this.props.match.params.id;
-    axios.get(`http://localhost:3001/students/${id}`).then((result) => {
+    apiHandler.get(`/${id}`).then((result) => {
       this.setState({ students: result.data });
       console.log(result.data);
     });
     console.log("Edit data");
   }
   render() {
+    const states=["","Andhra Pradhesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh",
+          "Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala",
+          "Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha",
+          "Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh",
+          "Uttarakhand","West Bengal"];
+
     return (
       <CONTAINER>
         <Formik
@@ -134,8 +140,8 @@ class EditData extends React.Component {
             console.log("just before post");
             const id = this.props.match.params.id;
 
-            axios
-              .put(`http://localhost:3001/students/${id}`, { ...values })
+            apiHandler
+              .put(`/${id}`, { ...values })
               .then((res) => console.log("edited succesfully mate"));
             resetForm();
             setSubmitting(false);
@@ -315,35 +321,10 @@ class EditData extends React.Component {
                     touched.stateName && errors.stateName ? "error" : null
                   }
                 >
-                  <option></option>
-                  <option>Andhra Pradhesh</option>
-                  <option>Arunachal Pradesh</option>
-                  <option>Assam</option>
-                  <option>Bihar</option>
-                  <option>Chhattisgarh</option>
-                  <option>Goa</option>
-                  <option>Gujarat</option>
-                  <option>Haryana</option>
-                  <option>Himachal Pradesh</option>
-                  <option>Jharkhand</option>
-                  <option>Karnataka</option>
-                  <option>Kerala</option>
-                  <option>Madhya Pradesh</option>
-                  <option>Maharashtra</option>
-                  <option>Manipur</option>
-                  <option>Meghalaya</option>
-                  <option>Mizoram</option>
-                  <option>Nagaland</option>
-                  <option>Odisha</option>
-                  <option>Punjab</option>
-                  <option>Rajasthan</option>
-                  <option>Sikkim</option>
-                  <option>Tamil Nadu</option>
-                  <option>Telangana</option>
-                  <option>Tripura</option>
-                  <option>Uttar Pradesh</option>
-                  <option>Uttarakhand</option>
-                  <option>West Bengal</option>
+                  {
+                  states.map((data) => <option>{data}</option> )
+                  }
+              
                 </Form.Control>
                 {touched.stateName && errors.stateName ? (
                   <div className="error-message">{errors.stateName}</div>

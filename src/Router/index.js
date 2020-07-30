@@ -28,6 +28,7 @@ class Routes extends React.Component {
           path="/edit_data/:id"
           component={(props) => <EditData {...props} />}
         />
+        
       </Switch>
     );
   }
