@@ -1,0 +1,34 @@
+{
+  "students": [
+    {
+      "firstName": "Charan",
+      "lastName": "Pasupula",
+      "address": "Plot-124",
+      "mobileNumber": "8847447603",
+      "cityName": "Ranchi",
+      "stateName": "Jharkhand",
+      "gpa": "8.89",
+      "id": 28
+    },
+    {
+      "firstName": "Abhu",
+      "lastName": "Tanmay Kirthi",
+      "address": "Plot-908",
+      "mobileNumber": "879798546",
+      "cityName": "Kotla",
+      "stateName": "Nagaland",
+      "gpa": "8.4",
+      "id": 30
+    },
+    {
+      "firstName": "Charan",
+      "lastName": "Sai",
+      "address": "1-5-112",
+      "mobileNumber": "8179964228",
+      "cityName": "Vizag",
+      "stateName": "Meghalaya",
+      "gpa": "7.5",
+      "id": 31
+    }
+  ]
+}
