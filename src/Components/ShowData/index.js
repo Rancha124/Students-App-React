@@ -1,52 +1,51 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import history from "../../services/history";
 import { Table, Button } from "react-bootstrap";
 import apiHandler from "../../services/apiHandler";
 
-class ShowData extends React.Component {
-  state = {
-    students: [],
-    dummy: false,
-  };
-   componentDidMount() {
+function ShowData(props) {
+ 
+  const [students,setStudensts] = useState([])
+   useEffect(() => {
      apiHandler.get("/").then((result) => {
-      this.setState({ students: result.data });
+      setStudensts(result.data);
+      console.log(result.data);
     });
-  this.setState({ dummy: !this.state.dummy });
-  }
-  componentDidUpdate(pP, pS) {
-    if (pS.students === this.state.students) {
-      apiHandler.get("/").then((result) => {
-        this.setState({ students: result.data });
-      });
-    }
-  }
-  deleteData = async (index) => {
-    const id = this.state.students[index].id;
+  },[])
+  useEffect(() => {
+    apiHandler.get("/").then((result) => {
+      setStudensts(result.data);
+      console.log(result.data);
+    });
+console.log("Students data edited");
+ },[students.length])
+
+  const deleteData = async (index) => {
+    const id = students[index].id;
     try{
       await  apiHandler.delete(`/${id}`)
       const result = await apiHandler.get("/")
-      this.setState({ students: result.data });
+      setStudensts(result.data);
     } catch (e){
       console.log(e)
       alert(e)
     }
     
   };
-  showEntireDetails = (index) => {
-    const id = this.state.students[index].id;
+const showEntireDetails = (index) => {
+    const id = students[index].id;
     apiHandler
       .get(`/${id}`)
       .then(history.push(`/full_details/${id}`));
   };
-  editThisData = (index) => {
-    const id = this.state.students[index].id;
-    history.push(`/edit_data/${id}`);
+ const editThisData = (index) => {
+    const id = students[index].id;
     apiHandler
       .get(`/${id}`)
-      .then((res) => this.setState({ students: res.data }));
+      .then((res) => setStudensts( res.data ));
+      history.push(`/edit_data/${id}`);
   };
-  render() {
+  
     return (
       <>
         <div className="container" style={{ backgroundColor: "lightgray" }}>
@@ -84,7 +83,7 @@ class ShowData extends React.Component {
                 </tr>
               </thead>
               <tbody style={{ textAlign: "center" }}>
-                {this.state.students.map((obj, index) => {
+                {students.map((obj, index) => {
                   return (
                     <tr key={index}>
                       <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
@@ -112,7 +111,7 @@ class ShowData extends React.Component {
                         {" "}
                         <Button
                           style={{ borderRadius: "5px", cursor: "pointer" }}
-                          onClick={() => this.showEntireDetails(index)}
+                          onClick={() => showEntireDetails(index)}
                         >
                           Full Details
                         </Button>{" "}
@@ -127,7 +126,7 @@ class ShowData extends React.Component {
                             paddingTop: "5px",
                             cursor: "pointer",
                           }}
-                          onClick={() => this.editThisData(index)}
+                          onClick={() => editThisData(index)}
                         ></i>{" "}
                       </td>
                       <td style={{ paddingTop: "12px", paddingBottom: "12px" }}>
@@ -140,7 +139,7 @@ class ShowData extends React.Component {
                             paddingTop: "5px",
                             cursor: "pointer",
                           }}
-                          onClick={() => this.deleteData(index)}
+                          onClick={() => deleteData(index)}
                         ></i>{" "}
                       </td>
                     </tr>
@@ -166,7 +165,7 @@ class ShowData extends React.Component {
         </div>
       </>
     );
-  }
+  
 }
 
 export default ShowData;

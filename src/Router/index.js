@@ -3,10 +3,9 @@ import { Switch, Route } from "react-router-dom";
 import ShowData from "../Components/ShowData/index";
 import AddStudent from "../Components/AddStudent";
 import FullDetails from "../Components/FullDetails";
-import EditData from "../Components/EditData";
 
-class Routes extends React.Component {
-  render() {
+function Routes () {
+  
     return (
       <Switch>
         <Route
@@ -26,11 +25,11 @@ class Routes extends React.Component {
         />
         <Route
           path="/edit_data/:id"
-          component={(props) => <EditData {...props} />}
+          component={(props) => <AddStudent {...props} />}
         />
         
       </Switch>
     );
   }
-}
+
 export default Routes;

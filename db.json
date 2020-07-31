@@ -1,34 +1,54 @@
 {
   "students": [
     {
-      "firstName": "Charan",
-      "lastName": "Pasupula",
-      "address": "Plot-124",
-      "mobileNumber": "8847447603",
-      "cityName": "Ranchi",
-      "stateName": "Jharkhand",
-      "gpa": "8.89",
-      "id": 28
-    },
-    {
       "firstName": "Abhu",
       "lastName": "Tanmay Kirthi",
       "address": "Plot-908",
       "mobileNumber": "879798546",
-      "cityName": "Kotla",
-      "stateName": "Nagaland",
-      "gpa": "8.4",
+      "cityName": "Kota",
+      "stateName": "Mizoram",
+      "gpa": "8.1",
       "id": 30
     },
     {
-      "firstName": "Charan",
-      "lastName": "Sai",
-      "address": "1-5-112",
-      "mobileNumber": "8179964228",
-      "cityName": "Vizag",
-      "stateName": "Meghalaya",
-      "gpa": "7.5",
+      "firstName": "Ram",
+      "lastName": "Nandhan",
+      "address": "Plot-9091",
+      "mobileNumber": "5679898",
+      "cityName": "Chandigarh",
+      "stateName": "Kerala",
+      "gpa": "7.65",
       "id": 31
+    },
+    {
+      "firstName": "Vijay",
+      "lastName": "Sethupathi",
+      "address": "Mourya nagar",
+      "mobileNumber": "457899798",
+      "cityName": "Makka Selvan",
+      "stateName": "Tamil Nadu",
+      "gpa": "9.64",
+      "id": 37
+    },
+    {
+      "firstName": "Anil",
+      "lastName": "Kumar",
+      "address": "Plot-894",
+      "mobileNumber": "67845899",
+      "cityName": "Odisha",
+      "stateName": "Odisha",
+      "gpa": "9.64",
+      "id": 39
+    },
+    {
+      "firstName": "Charan",
+      "lastName": "Pasupula",
+      "address": "Plot-450",
+      "mobileNumber": "8847447603",
+      "cityName": "Vizag",
+      "stateName": "Andhra Pradhesh",
+      "gpa": "7.76",
+      "id": 40
     }
   ]
 }
