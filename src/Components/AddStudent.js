@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Form, Button } from "react-bootstrap";
 import { Formik } from "formik";
@@ -108,8 +108,17 @@ function AddStudent(props) {
           "Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha",
           "Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh",
           "Uttarakhand","West Bengal"];
+
+     const [students, setStudents] = useState({})
   
-  
+  useEffect(()=> {
+      const id = props.match.params.id;
+      if (id) {
+        apiHandler.get(`/${id}`).then((result) => {
+          setStudents(result.data);
+        });
+      }
+  },[])
   
 
   return (
@@ -129,14 +138,13 @@ function AddStudent(props) {
       <CONTAINER>
         <Formik enableReinitialize
           initialValues =
-          { { firstName: "",
-            lastName: "",
-            address: "",
-            mobileNumber: "",
-            cityName: "",
-            stateName: "",
-            gpa: "",
-          }}
+          { {firstName: students.firstName || "",
+            lastName: students.lastName || "",
+            address: students.address || "",
+            mobileNumber: students.mobileNumber || "",
+            cityName: students.cityName || "",
+            stateName: students.stateName || "",
+            gpa: students.gpa || ""}}
           validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             setSubmitting(true);
