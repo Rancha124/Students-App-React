@@ -1,5 +1,5 @@
 This is a students-app project where you can enter student details in a form and submit it. You can revisit the site and edit the data or even delete it if you want. 
-I have used React-router for dynamic routing, Formik and Yup for form validation. I have created a REST API with JSON Server.
+I have used React-router for dynamic routing so that I can have different URLs for different students , used Formik and Yup for form validation. I have created a REST API with JSON Server.
 
 
 
