@@ -1,3 +1,8 @@
+This is a students app project where you can enter student details in a form and submit it. You can revisit the site and edit the data or even delete it if you want. 
+I have used React-router for dynamic routing, Formik and Yup for form validation.
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
